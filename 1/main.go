@@ -22,8 +22,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	pwd := processRotations(rotations)
-	fmt.Printf("password: %d\n", pwd)
+	pwd, crossedZero := processRotations(rotations)
+	fmt.Printf("password: %d, crossed zero: %d, total: %d\n", pwd, crossedZero, pwd+crossedZero)
 	os.Exit(0)
 }
 
@@ -84,14 +84,16 @@ func mapRotation(s string) (int, error) {
 	return i * sign, nil
 }
 
-func processRotations(a []int) int {
-	result := 0
+func processRotations(a []int) (int, int) {
+	result, crossedZero := 0, 0
 	pos := POS
 	if pos == 0 {
 		result++
 	}
 
 	for _, v := range a {
+		crossedZero += crossesZeroTimes(pos, v)
+
 		pos = nextPos(pos, v)
 		if pos == 0 {
 			result++
@@ -99,16 +101,38 @@ func processRotations(a []int) int {
 		// fmt.Printf("step %d: v %d, pos %d\n", i, v, pos)
 	}
 
-	return result
+	return result, crossedZero
 }
 
-func nextPos(p, s int) int {
-	s = s % 100
-	if p+s > MAX {
-		return p + s - MAX - 1
+func nextPos(pos, step int) int {
+	s := step % 100
+
+	if pos+s > MAX {
+		return pos + s - MAX - 1
+
 	}
-	if p+s < MIN {
-		return MAX + p + s + 1
+	if pos+s < MIN {
+		return MAX + pos + s + 1
 	}
-	return p + s
+
+	return pos + s
+}
+
+func crossesZeroTimes(pos, step int) int {
+	c := abs(step) / 100
+	s := step % 100
+	n := nextPos(pos, step)
+
+	if (pos+s > MAX || pos+s < MIN) && n != 0 && pos != 0 {
+		c++
+	}
+
+	return c
+}
+
+func abs(v int) int {
+	if v >= 0 {
+		return v
+	}
+	return v * -1
 }
