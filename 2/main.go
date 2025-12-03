@@ -87,9 +87,18 @@ func (r IDRange) InvalidIDs() []int {
 }
 
 func isValidID(id string) bool {
-	if len(id)%2 != 0 {
-		return true
+	// if len(id)%2 != 0 {
+	// 	return true
+	// }
+	// middle := len(id) / 2
+	// return id[:middle] != id[middle:]
+
+	for i := range len(id) / 2 {
+		v := strings.ReplaceAll(id, id[0:i+1], "")
+		if len(v) == 0 {
+			return false
+		}
 	}
-	middle := len(id) / 2
-	return id[:middle] != id[middle:]
+
+	return true
 }
