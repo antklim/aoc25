@@ -15,7 +15,7 @@ const (
 )
 
 func main() {
-	rotations, err := utils.ReadInput("input.txt", mapRotation)
+	rotations, err := utils.ReadInputFile("input.txt", mapRotation)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to read input: %v", err)
 		os.Exit(1)

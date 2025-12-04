@@ -8,8 +8,8 @@ import (
 	"os"
 )
 
-// ReadInput reads file containing input information and parses each line of file to T.
-func ReadInput[R any](file string, mapFunc func(string) (R, error)) ([]R, error) {
+// ReadInputFile reads file containing input information and parses each line of file to T.
+func ReadInputFile[R any](file string, mapFunc func(string) (R, error)) ([]R, error) {
 	fi, err := os.Lstat(file)
 	if err != nil {
 		return nil, err
@@ -24,10 +24,10 @@ func ReadInput[R any](file string, mapFunc func(string) (R, error)) ([]R, error)
 	}
 	defer f.Close()
 
-	return readFile(f, mapFunc)
+	return ReadInput(f, mapFunc)
 }
 
-func readFile[R any](r io.Reader, mapFunc func(string) (R, error)) ([]R, error) {
+func ReadInput[R any](r io.Reader, mapFunc func(string) (R, error)) ([]R, error) {
 	var result []R
 	br := bufio.NewReader(r)
 	for i := 0; ; i++ {

@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	ranges, err := utils.ReadInput("input.txt", mapIDs)
+	ranges, err := utils.ReadInputFile("input.txt", mapIDs)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to read input: %v", err)
 		os.Exit(1)

@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	joltages, err := utils.ReadInput("input.txt", mapJoltage)
+	joltages, err := utils.ReadInputFile("input.txt", mapJoltage)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to read input: %v", err)
 		os.Exit(1)
