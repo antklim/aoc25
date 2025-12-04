@@ -14,8 +14,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	v := accessibleToForklift(grid)
-	fmt.Printf("amount of rolls accessible by a forklift: %d\n", len(v))
+	// v := accessibleToForklift(grid)
+	// fmt.Printf("amount of rolls accessible by a forklift: %d\n", len(v))
+	v := removeAll(grid)
+	fmt.Printf("amount of all remove rolls: %d\n", v)
 	os.Exit(0)
 }
 
@@ -79,6 +81,38 @@ func numberOfadjacentRolls(a []string, i, j int) int {
 		if j < len(a)-1 && isRoll(rune(a[i+1][j+1])) {
 			result++
 		}
+	}
+
+	return result
+}
+
+func removeRolls(a []string, r [][2]int) []string {
+	result := make([]string, 0, len(a))
+	for _, s := range a {
+		result = append(result, s)
+	}
+
+	for _, xy := range r {
+		x, y := xy[0], xy[1]
+		s := result[x]
+		result[x] = s[:y] + "x" + s[y+1:]
+	}
+
+	return result
+}
+
+func removeAll(a []string) int {
+	result := 0
+
+	grid := a
+
+	for {
+		removableRolls := accessibleToForklift(grid)
+		if len(removableRolls) == 0 {
+			break
+		}
+		result += len(removableRolls)
+		grid = removeRolls(grid, removableRolls)
 	}
 
 	return result

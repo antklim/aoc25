@@ -59,3 +59,15 @@ func TestAccessibleToForklift(t *testing.T) {
 		t.Errorf("accessibleToForklift\nwant %v,\n got %v", expected, got)
 	}
 }
+
+func TestRemoveAll(t *testing.T) {
+	input, err := utils.ReadInput(strings.NewReader(testInput), mapInput)
+	if err != nil {
+		t.Errorf("failed to read input: %v", err)
+	}
+
+	got := removeAll(input)
+	if got != 43 {
+		t.Errorf("removeAll want 43, got %d", got)
+	}
+}
