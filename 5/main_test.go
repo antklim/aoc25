@@ -20,7 +20,7 @@ const testInput = `3-5
 32`
 
 func TestReadInput(t *testing.T) {
-	expectedRanges := [][2]int{
+	expectedRanges := []Range{
 		{3, 5},
 		{10, 14},
 		{16, 20},
@@ -41,7 +41,7 @@ func TestReadInput(t *testing.T) {
 }
 
 func TestFilterFreshIDs(t *testing.T) {
-	ranges := [][2]int{
+	ranges := []Range{
 		{3, 5},
 		{10, 14},
 		{16, 20},
@@ -53,5 +53,19 @@ func TestFilterFreshIDs(t *testing.T) {
 	got := filterFreshIDs(ids, ranges)
 	if !utils.EqualSlices(expected, got) {
 		t.Errorf("fresh IDs are invalid\nwant %v,\n got %v", expected, got)
+	}
+}
+
+func TestTotalFreshIDs(t *testing.T) {
+	ranges := []Range{
+		{3, 5},
+		{10, 14},
+		{16, 20},
+		{12, 18},
+	}
+	expected := 14
+	got := totalFreshIDs(ranges)
+	if expected != got {
+		t.Errorf("total fresh IDs are invalid: want %v,\n got %v", expected, got)
 	}
 }

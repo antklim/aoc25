@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func readInputFile(file string) ([][2]int, []int, error) {
+func readInputFile(file string) ([]Range, []int, error) {
 	fi, err := os.Lstat(file)
 	if err != nil {
 		return nil, nil, err
@@ -28,8 +28,8 @@ func readInputFile(file string) ([][2]int, []int, error) {
 	return readInput(f)
 }
 
-func readInput(r io.Reader) ([][2]int, []int, error) {
-	var freshIngredientRanges [][2]int
+func readInput(r io.Reader) ([]Range, []int, error) {
+	var freshIngredientRanges []Range
 	var ingredientIDs []int
 	state := readingRanges
 
